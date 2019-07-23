@@ -25,8 +25,6 @@ void init(struct control list_control[], struct lan list_lan[]){
 		interface[4] = NULL;
 		strcpy(list_control[i].interface, interface);
 		strcpy(list_control[i].alias, "GE1-GigE");
-		strcpy(list_control[i].filter, "Default");
-		strcpy(list_control[i].rule, "Default");
 		strcpy(list_control[i].mode, "Disable");
 
 		strcpy(list_lan[i].interface, interface);
@@ -43,8 +41,6 @@ void show(struct control list[]){
 	for(int i = 1; i < NUM_INTERFACE; i++){
 		printf("%s\t", list[i].interface);
 		printf("%s\t", list[i].alias);
-		printf("%s\t", list[i].filter);
-		printf("%s\t", list[i].rule);
 		printf("%s\t", list[i].mode);
 		printf("\n");
 	}
@@ -69,8 +65,6 @@ void send_control(int Socket, struct control list_control[]){
 	for(int i = 1; i < NUM_INTERFACE; i++){
 		send(Socket, list_control[i].interface, 50, 0);
 		send(Socket, list_control[i].alias, 50, 0);
-		send(Socket, list_control[i].filter, 50, 0);
-		send(Socket, list_control[i].rule, 50, 0);
 		send(Socket, list_control[i].mode, 50, 0);
 	}
 }
