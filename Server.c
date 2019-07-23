@@ -206,7 +206,5 @@ int main(){
 	}
 
 	close(newSocket);
-
-
 	return 0;
 }
