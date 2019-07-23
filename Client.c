@@ -19,7 +19,7 @@ struct lan{
 };
 
 void show(struct control list[]){
-	printf("Interface Alias Filter Rule Mode\n");
+	printf("Interface Alias\t   Filter Rule Mode\n");
 	for(int i = 1; i < NUM_INTERFACE; i++){
 		printf("%s\t", list[i].interface);
 		printf("%s\t", list[i].alias);
