@@ -11,7 +11,7 @@
 const int NUM_INTERFACE = 5;
 
 struct control{
-	char interface[50], alias[50], filter[50], rule[50], mode[50];
+	char interface[50], alias[50], mode[50];
 };
 
 struct lan{
@@ -23,8 +23,6 @@ void show(struct control list[]){
 	for(int i = 1; i < NUM_INTERFACE; i++){
 		printf("%s\t", list[i].interface);
 		printf("%s\t", list[i].alias);
-		printf("%s\t", list[i].filter);
-		printf("%s\t", list[i].rule);
 		printf("%s\t", list[i].mode);
 		printf("\n");
 	}
@@ -68,8 +66,6 @@ int main(){
 	for(int i = 1; i < NUM_INTERFACE; i++){
 		recv(clientSocket, list_control[i].interface, 50, 0);
 		recv(clientSocket, list_control[i].alias, 50, 0);
-		recv(clientSocket, list_control[i].filter, 50, 0);
-		recv(clientSocket, list_control[i].rule, 50, 0);
 		recv(clientSocket, list_control[i].mode, 50, 0);
 	}
 	show(list_control);
@@ -94,8 +90,6 @@ int main(){
 			for(int i = 1; i < NUM_INTERFACE; i++){
 				recv(clientSocket, list_control[i].interface, 50, 0);
 				recv(clientSocket, list_control[i].alias, 50, 0);
-				recv(clientSocket, list_control[i].filter, 50, 0);
-				recv(clientSocket, list_control[i].rule, 50, 0);
 				recv(clientSocket, list_control[i].mode, 50, 0);
 			}
 			show(list_control);
