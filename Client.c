@@ -11,8 +11,11 @@
 const int NUM_INTERFACE = 5;
 
 struct control{
-	int id;
 	char interface[50], alias[50], filter[50], rule[50], mode[50];
+};
+
+struct lan{
+	char interface[50], rule[50], proto[50], srcip[50], srcmac[50], mask[50];
 };
 
 void show(struct control list[]){
@@ -27,7 +30,15 @@ void show(struct control list[]){
 	}
 }
 
-
+void show_rule(struct lan _lan){
+	printf("Rule updated!\n");
+	printf("Interface:\t%s\n", _lan.interface);
+	printf("Rule:\t%s\n", _lan.rule);
+	printf("Protocol:\t%s\n", _lan.proto);
+	printf("Source IP:\t%s\n", _lan.srcip);
+	printf("Source MAC:\t%s\n", _lan.srcmac);
+	printf("Mac mask:\t%s\n", _lan.mask);
+}
 int main(){
 
 	int clientSocket, ret;
@@ -97,8 +108,11 @@ int main(){
 			send(clientSocket, buffer, 50, 0);
 			char status[50] = "False!";
 			recv(clientSocket, status, 50, 0);
-			printf("Server update: %s\n", status);
-			if(strcmp(status, "Premiss Denied!") == 0) continue;
+
+			if(strcmp(status, "Premiss Denied!") == 0) {
+				printf("Server update: %s\n", status);
+				continue;
+			}
 			for (int i = 0; i < 5; ++i)
 			{
 				recv(clientSocket, buffer, 1024, 0);
@@ -106,6 +120,15 @@ int main(){
 				scanf("%s", &buffer[0]);
 				send(clientSocket, buffer, strlen(buffer), 0);
 			}
+			printf("Server update: %s\n", status);
+			struct lan _lan;
+			recv(clientSocket, _lan.interface, 50, 0);
+			recv(clientSocket, _lan.rule, 50, 0);
+			recv(clientSocket, _lan.proto, 50, 0);
+			recv(clientSocket, _lan.srcip, 50, 0);
+			recv(clientSocket, _lan.srcmac, 50, 0);
+			recv(clientSocket, _lan.mask, 50, 0);
+			show_rule(_lan);
 		}
 
 		else if(strcmp(buffer, "delete") == 0){
@@ -123,3 +146,4 @@ int main(){
 
 	return 0;
 }
+
