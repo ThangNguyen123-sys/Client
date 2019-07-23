@@ -75,6 +75,16 @@ void send_control(int Socket, struct control list_control[]){
 	}
 }
 
+void send_rule(int Socket, struct lan _lan){
+	for(int i = 1; i < NUM_INTERFACE; i++){
+		send(Socket, _lan.interface, 50, 0);
+		send(Socket, _lan.rule, 50, 0);
+		send(Socket, _lan.proto, 50, 0);
+		send(Socket, _lan.srcip, 50, 0);
+		send(Socket, _lan.srcmac, 50, 0);
+		send(Socket, _lan.mask, 50, 0);
+	}
+}
 
 void update_rule(int Socket, struct lan list_lan[], struct control list_control[]){
 	char rule[50], interface[50];
@@ -99,6 +109,7 @@ void update_rule(int Socket, struct lan list_lan[], struct control list_control[
 	send(Socket, "Mac mask:\t", 50, 0);
 	recv(Socket, list_lan[id].mask, 50, 0);
 	printf("Update Success!\n");
+	send_rule(Socket, list_lan[id]);
 }
 
 void delete_rule(int Socket, struct lan list_lan[], struct control list_control[]){
